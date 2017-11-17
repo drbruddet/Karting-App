@@ -7,7 +7,8 @@ sap.ui.define([
 	"use strict";
 	return Controller.extend("KartingReportingApp.controller.Races", {
 
-		onInit: function() { 
+		onInit: function() {
+			this.i18n = this.getModel("i18n").getResourceBundle();
 			this.setNoDataText();
 			
 			var oViewModel = new JSONModel({
@@ -40,6 +41,9 @@ sap.ui.define([
 			this.oSelectName		= this.getView().byId("race-name-filter");
 			this.oSelectTournament	= this.getView().byId("race-tournament-filter");
 			this.oSelectLocation	= this.getView().byId("race-location-filter");
+			
+			this.getModel("config").setProperty("/Filter/text", this.i18n.getText("noFilter"));
+			this.addSnappedLabel();
 		},
 		
 		onExit: function () {
@@ -51,10 +55,13 @@ sap.ui.define([
 		goToRaceDetail: function() { 
 			//go to the race detail page
 		},
+		
+		onToggleHeader: function () {
+			this.getView().byId("racePage").setHeaderExpanded(!this.getView().byId("racePage").getHeaderExpanded());
+		},
 	
 		formatToggleButtonText: function(bValue){
-			var i18n = this.getModel("i18n").getResourceBundle();
-			return bValue ? i18n.getText("collapseFilters") : i18n.getText("expandFilters");
+			return bValue ? this.i18n.getText("collapseFilters") : this.i18n.getText("expandFilters");
 		},
 
 		onSelectChange: function() {
@@ -68,15 +75,30 @@ sap.ui.define([
 
 		filterTable: function (aCurrentFilterValues) {
 			this.getView().byId("table_races").getBinding("items").filter(this.getFilters(aCurrentFilterValues));
+			this.updateFilterCriterias(this.getFilterCriteria(aCurrentFilterValues));
+		},
+		
+		updateFilterCriterias: function (aFilterCriterias) {
+			this.removeSnappedLabel(); /* because in case of label with an empty text, */
+			this.addSnappedLabel(); /* a space for the snapped content will be allocated and can lead to title misalignment */
+			this.getModel("config").setProperty("/Filter/text", this.getFormattedSummaryText(aFilterCriterias));
+		},
+		
+		addSnappedLabel: function() {
+			var oSnappedLabel = this.getSnappedLabel();
+			oSnappedLabel.attachBrowserEvent("click", this.onToggleHeader, this);
+			this.getView().byId("racePage").getTitle().addSnappedContent(oSnappedLabel);
+		},
+
+		removeSnappedLabel: function() {
+			this.getView().byId("racePage").getTitle().destroySnappedContent();
 		},
 
 		getFilters: function (aCurrentFilterValues) {
 			this.aFilters = [];
-
 			this.aFilters = this.aKeys.map(function (sCriteria, i) {
 				return new sap.ui.model.Filter(sCriteria, sap.ui.model.FilterOperator.Contains, aCurrentFilterValues[i]);
 			});
-
 			return this.aFilters;
 		},
 		
@@ -86,12 +108,18 @@ sap.ui.define([
 			});
 		},
 		
+		getFormattedSummaryText: function (aFilterCriterias) {
+			return aFilterCriterias.length > 0
+				? this.i18n.getText("FilteredBy") + " (" + aFilterCriterias.length + "): " + aFilterCriterias.join(", ")
+				: this.i18n.getText("noFilter");
+		},
+		
 		getSelectedItemText: function (oSelect) {
 			return oSelect.getSelectedItem() ? oSelect.getSelectedItem().getKey() : "";
 		},
 
-		getModel: function(name) {
-    		return this.getView().getModel(name) || this.getOwnerComponent().getModel(name);
+		getSnappedLabel : function () {
+			return new sap.m.Label({ text: "{/Filter/text}" });
 		},
 		
 		setNoDataText: function() {
@@ -106,10 +134,17 @@ sap.ui.define([
 				object.setNoDataText(error.statusCode + " " + error.statusText + ". " + error.response.body);
 			}).attachRequestCompleted(function() {
 				object.setNoDataText(
-					this.bindList("$metadata").getLength() === 0 ? i18n.getText("noData") : i18n.getText("unknownError")
+					this.bindList("$metadata").getLength() === 0 
+						? i18n.getText("noData") 
+						: i18n.getText("unknownError")
 				);
 			});
+		},
+		
+		getModel: function(name) {
+    		return this.getView().getModel(name) || this.getOwnerComponent().getModel(name);
 		}
+		
 		
 	});
 });

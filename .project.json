@@ -45,8 +45,8 @@
     }
   },
   "mockpreview": {
-    "mockUri": "/ZINT_KART_SRV/sap/opu/odata/SAP/ZINT_KART_SRV",
-    "metadataFilePath": "",
+    "mockUri": "/ZINT_KART_SRV/sap/opu/odata/SAP/ZINT_KART_SRV/",
+    "metadataFilePath": "localService/metadata.xml",
     "loadJSONFiles": false,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""

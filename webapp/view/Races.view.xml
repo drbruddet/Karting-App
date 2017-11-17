@@ -10,6 +10,8 @@
 				</f:heading>
 				<f:actions>
 					<ToolbarSpacer/>
+					<Label text="{config>/Filter/text}"/>
+					<ToolbarSpacer/>
 					<ToggleButton pressed="{config>/headerExpanded}" icon="sap-icon://collapse"
 						text="{path:'config>/headerExpanded', formatter:'.formatToggleButtonText'}" type="Transparent"/>
 				</f:actions>
