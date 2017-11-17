@@ -23,26 +23,26 @@
 					<layout:Grid>
 						<layout:VerticalLayout>
 							<Label text="Date:"/>
-							<Select id="race-year-filter" forceSelection="true" change="onSelectChange" items="{FilterModel>/RacesDatesArray}">
-								<core:Item key="{FilterModel>key}" text="{FilterModel>name}"/>
+							<Select id="race-year-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesDatesArray}">
+								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 						<layout:VerticalLayout>
 							<Label text="Race Name:"/>
-							<Select id="race-name-filter" forceSelection="true" change="onSelectChange" items="{FilterModel>/RacesIdArray}">
-								<core:Item key="{FilterModel>key}" text="{FilterModel>name}"/>
+							<Select id="race-name-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesIdArray}">
+								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 						<layout:VerticalLayout>
 							<Label text="Tournament:"/>
-							<Select id="race-tournament-filter" forceSelection="true" change="onSelectChange" items="{FilterModel>/RacesTournamentArray}">
-								<core:Item key="{FilterModel>key}" text="{FilterModel>name}"/>
+							<Select id="race-tournament-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesTournamentArray}">
+								<core:Item key="{filterModelkey}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 						<layout:VerticalLayout>
 							<Label text="Location:"/>
-							<Select id="race-location-filter" forceSelection="true" change="onSelectChange" items="{FilterModel>/RacesLocationArray}">
-								<core:Item key="{FilterModel>key}" text="{FilterModel>name}"/>
+							<Select id="race-location-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesLocationArray}">
+								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 					</layout:Grid>

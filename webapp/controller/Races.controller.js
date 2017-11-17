@@ -10,31 +10,6 @@ sap.ui.define([
 		onInit: function() {
 			this.i18n = this.getModel("i18n").getResourceBundle();
 			this.setNoDataText();
-			
-			var oViewModel = new JSONModel({
-				RacesDatesArray: [
-					{ "key" : ""    , "name" : "All" },
-    				{ "key" : "2017", "name" : "2017" },
-    				{ "key" : "2016", "name" : "2016" }
-				],
-				RacesIdArray: [
-					{ "key" : ""   , "name" : "All" },
-    				{ "key" : "001", "name" : "Trophee Andros" },
-    				{ "key" : "002", "name" : "Coupe Univers" },
-    				{ "key" : "003", "name" : "Etape Suisse" }
-				],
-				RacesTournamentArray: [
-					{ "key" : ""   , "name" : "All" },
-    				{ "key" : "002", "name" : "002" }
-				],
-				RacesLocationArray: [
-					{ "key" : ""   , "name" : "All" },
-    				{ "key" : "001", "name" : "001" },
-    				{ "key" : "002", "name" : "002" },
-    				{ "key" : "003", "name" : "003" }
-				]
-			});
-			this.getView().setModel(oViewModel, "FilterModel");
 
 			this.aKeys				= ["YearRace", "RaceId", "TournamentId", "LocationId"];
 			this.oSelectYearRace	= this.getView().byId("race-year-filter");
@@ -43,23 +18,56 @@ sap.ui.define([
 			this.oSelectLocation	= this.getView().byId("race-location-filter");
 			
 			this.getModel("config").setProperty("/Filter/text", this.i18n.getText("noFilter"));
+			this.buildFilterModel();
 			this.addSnappedLabel();
 		},
-		
+
 		onExit: function () {
 			this.aKeys		= [];
 			this.aFilters	= [];
 			this.oModel 	= null;
 		},
+		
+		buildFilterModel: function () {
+			var filterModel = new sap.ui.model.json.JSONModel();
+			var i18n		= this.getModel("i18n").getResourceBundle();
+
+			this.getModel().read("/RaceSet/", {
+        		success: function(oData, oResponse) {
+        			function pushData(oData, key, name) {
+        				var intermediateArray = [];
+						for (let count = 0; count < oData.results.length; count++) {
+            				intermediateArray.push({ "key" : oData.results[count][key], "name" : oData.results[count][name] });
+            			}
+            			var finalArray = [{ "key" : "", "name" : i18n.getText("All") }];
+            			for (let count = 0; count < intermediateArray.length; count++) {
+            				if (intermediateArray[count].key !== finalArray[count].key) {
+            					finalArray.push(intermediateArray[count]);
+            				}
+            			}
+            			return finalArray;
+                    }
+
+            		filterModel.setData({
+            			RacesDatesArray: pushData(oData, 'YearRace', 'YearRace'),
+            			RacesIdArray: pushData(oData, 'RaceId', 'RaceName'),
+            			RacesLocationArray: pushData(oData, 'LocationId', 'LocationId'),
+            			RacesTournamentArray: pushData(oData, 'TournamentId', 'TournamentId')
+            		});
+        		},
+        		error: function(error) { }
+			});
+			this.getView().setModel(filterModel,"filterModel");
+		},
 
 		goToRaceDetail: function() { 
 			//go to the race detail page
 		},
-		
+
 		onToggleHeader: function () {
 			this.getView().byId("racePage").setHeaderExpanded(!this.getView().byId("racePage").getHeaderExpanded());
 		},
-	
+
 		formatToggleButtonText: function(bValue){
 			return bValue ? this.i18n.getText("collapseFilters") : this.i18n.getText("expandFilters");
 		},
@@ -77,13 +85,13 @@ sap.ui.define([
 			this.getView().byId("table_races").getBinding("items").filter(this.getFilters(aCurrentFilterValues));
 			this.updateFilterCriterias(this.getFilterCriteria(aCurrentFilterValues));
 		},
-		
+
 		updateFilterCriterias: function (aFilterCriterias) {
 			this.removeSnappedLabel(); /* because in case of label with an empty text, */
 			this.addSnappedLabel(); /* a space for the snapped content will be allocated and can lead to title misalignment */
 			this.getModel("config").setProperty("/Filter/text", this.getFormattedSummaryText(aFilterCriterias));
 		},
-		
+
 		addSnappedLabel: function() {
 			var oSnappedLabel = this.getSnappedLabel();
 			oSnappedLabel.attachBrowserEvent("click", this.onToggleHeader, this);
@@ -101,19 +109,19 @@ sap.ui.define([
 			});
 			return this.aFilters;
 		},
-		
+
 		getFilterCriteria: function (aCurrentFilterValues){
 			return this.aKeys.filter(function (el, i) {
 				if (aCurrentFilterValues[i] !== "") return  el;
 			});
 		},
-		
+
 		getFormattedSummaryText: function (aFilterCriterias) {
 			return aFilterCriterias.length > 0
 				? this.i18n.getText("FilteredBy") + " (" + aFilterCriterias.length + "): " + aFilterCriterias.join(", ")
 				: this.i18n.getText("noFilter");
 		},
-		
+
 		getSelectedItemText: function (oSelect) {
 			return oSelect.getSelectedItem() ? oSelect.getSelectedItem().getKey() : "";
 		},
@@ -121,7 +129,7 @@ sap.ui.define([
 		getSnappedLabel : function () {
 			return new sap.m.Label({ text: "{/Filter/text}" });
 		},
-		
+
 		setNoDataText: function() {
 			var i18n	= this.getModel("i18n").getResourceBundle();
 			var oModel	= this.getModel();
@@ -140,11 +148,10 @@ sap.ui.define([
 				);
 			});
 		},
-		
+
 		getModel: function(name) {
     		return this.getView().getModel(name) || this.getOwnerComponent().getModel(name);
 		}
-		
-		
+
 	});
 });
