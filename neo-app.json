@@ -1,0 +1,32 @@
+{
+  "welcomeFile": "/webapp/index.html",
+  "routes": [
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/ZINT_KART_SRV",
+      "target": {
+        "type": "destination",
+        "name": "ZINT_KART_SRV"
+      },
+      "description": "Karting Application Service"
+    }
+  ],
+  "sendWelcomeFileRedirect": true
+}

@@ -1,0 +1,75 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:core="sap.ui.core" height="100%"
+	controllerName="KartingReportingApp.controller.Races">
+	<f:DynamicPage id="racePage" headerExpanded="{config>/headerExpanded}" toggleHeaderOnTitleClick="{config>/titleClickable}">
+		<!-- DynamicPage Title -->
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>appTitle}"/>
+				</f:heading>
+				<f:actions>
+					<ToolbarSpacer/>
+					<ToggleButton pressed="{config>/headerExpanded}" icon="sap-icon://collapse"
+						text="{path:'config>/headerExpanded', formatter:'.formatToggleButtonText'}" type="Transparent"/>
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="{config>/pinnableHeader}">
+				<f:content>
+					<layout:Grid>
+						<layout:VerticalLayout>
+							<Label text="Date:"/>
+							<Select id="race-year-filter" forceSelection="true" change="onSelectChange" items="{FilterModel>/RacesDatesArray}">
+								<core:Item key="{FilterModel>key}" text="{FilterModel>name}"/>
+							</Select>
+						</layout:VerticalLayout>
+						<layout:VerticalLayout>
+							<Label text="Race Name:"/>
+							<Select id="race-name-filter" forceSelection="true" change="onSelectChange" items="{FilterModel>/RacesIdArray}">
+								<core:Item key="{FilterModel>key}" text="{FilterModel>name}"/>
+							</Select>
+						</layout:VerticalLayout>
+						<layout:VerticalLayout>
+							<Label text="Tournament:"/>
+							<Select id="race-tournament-filter" forceSelection="true" change="onSelectChange" items="{FilterModel>/RacesTournamentArray}">
+								<core:Item key="{FilterModel>key}" text="{FilterModel>name}"/>
+							</Select>
+						</layout:VerticalLayout>
+						<layout:VerticalLayout>
+							<Label text="Location:"/>
+							<Select id="race-location-filter" forceSelection="true" change="onSelectChange" items="{FilterModel>/RacesLocationArray}">
+								<core:Item key="{FilterModel>key}" text="{FilterModel>name}"/>
+							</Select>
+						</layout:VerticalLayout>
+					</layout:Grid>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		
+		<!-- DynamicPage Content -->
+		<f:content>
+			<Table id="table_races" noDataText="" items="{ path: '/RaceSet' }">
+				<columns>
+					<Column><Text text="Year"/></Column>
+					<Column><Text text="Name"/></Column>
+					<Column><Text text="Location"/></Column>
+					<Column><Text text="Nb Team"/></Column>
+					<Column><Text text="Winner"/></Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Text text="{YearRace}"/>
+							<ObjectIdentifier title="{RaceName} {= ${TournamentId} > 000 ? '- ' + ${TournamentId} : '' }" text=""/>
+							<Text text="{LocationId}"/>
+							<Text text="{NbTeams}"/>
+							<Link text="{Winner}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

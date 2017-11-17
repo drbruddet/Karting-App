@@ -1,0 +1,136 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZINT_KART_SRV" xml:lang="fr" sap:schema-version="1">
+            <EntityType Name="KartHeader" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Year_Race"/>
+                    <PropertyRef Name="Kart_Id"/>
+                    <PropertyRef Name="Race"/>
+                </Key>
+                <Property Name="Year_Race" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Exercice compt." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kart_Id" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Kart ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Race" Type="Edm.String" Nullable="false" MaxLength="2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kart_Name" Type="Edm.String" MaxLength="50" sap:label="Kart Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Ranking" Type="Edm.String" MaxLength="2" sap:label="Kart Ranking" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Laps" Type="Edm.String" MaxLength="3" sap:label="Kart Number of Laps" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Best_Time" Type="Edm.String" MaxLength="14" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Average_Speed" Type="Edm.Decimal" Precision="5" Scale="2" sap:label="Average Speed" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="KartItems" Relationship="ZINT_KART_SRV.Header2Item" FromRole="FromRole_Header2Item" ToRole="ToRole_Header2Item"/>
+                <NavigationProperty Name="KartPilotsSet" Relationship="ZINT_KART_SRV.Header2Pilots" FromRole="FromRole_Header2Pilots" ToRole="ToRole_Header2Pilots"/>
+            </EntityType>
+            <EntityType Name="KartItem" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Year_Race"/>
+                    <PropertyRef Name="Kart_Id"/>
+                    <PropertyRef Name="Race"/>
+                </Key>
+                <Property Name="Year_Race" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Exercice compt." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kart_Id" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Kart ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Race" Type="Edm.String" Nullable="false" MaxLength="2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lap" Type="Edm.String" MaxLength="3" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Time" Type="Edm.String" MaxLength="14" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kart_Out" Type="Edm.String" MaxLength="1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="KartPilots" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Year_Race"/>
+                    <PropertyRef Name="Race"/>
+                    <PropertyRef Name="Kart_Id"/>
+                    <PropertyRef Name="Pilot_Id"/>
+                </Key>
+                <Property Name="Year_Race" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Exercice compt." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Race" Type="Edm.String" Nullable="false" MaxLength="2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kart_Id" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Kart ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Pilot_Id" Type="Edm.String" Nullable="false" MaxLength="2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="First_Name" Type="Edm.String" MaxLength="25" sap:label="Prénom" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Last_Name" Type="Edm.String" MaxLength="25" sap:label="Nom" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Nickname" Type="Edm.String" MaxLength="50" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Picture" Type="Edm.String" MaxLength="230" sap:label="Chemin serveur" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="KartRacesInfo" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Year_Race"/>
+                    <PropertyRef Name="Race"/>
+                </Key>
+                <Property Name="Year_Race" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Exercice compt." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Race" Type="Edm.String" Nullable="false" MaxLength="2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="50" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Date_Race" Type="Edm.DateTime" Precision="7" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Location" Type="Edm.String" MaxLength="50" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="KartHeaderSet" Relationship="ZINT_KART_SRV.Header2Info" FromRole="FromRole_Header2Info" ToRole="ToRole_Header2Info"/>
+            </EntityType>
+            <Association Name="Header2Info" sap:content-version="1">
+                <End Type="ZINT_KART_SRV.KartRacesInfo" Multiplicity="1" Role="FromRole_Header2Info"/>
+                <End Type="ZINT_KART_SRV.KartHeader" Multiplicity="*" Role="ToRole_Header2Info"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Header2Info">
+                        <PropertyRef Name="Year_Race"/>
+                        <PropertyRef Name="Race"/>
+                    </Principal>
+                    <Dependent Role="ToRole_Header2Info">
+                        <PropertyRef Name="Year_Race"/>
+                        <PropertyRef Name="Race"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Header2Pilots" sap:content-version="1">
+                <End Type="ZINT_KART_SRV.KartHeader" Multiplicity="1" Role="FromRole_Header2Pilots"/>
+                <End Type="ZINT_KART_SRV.KartPilots" Multiplicity="*" Role="ToRole_Header2Pilots"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Header2Pilots">
+                        <PropertyRef Name="Year_Race"/>
+                        <PropertyRef Name="Race"/>
+                        <PropertyRef Name="Kart_Id"/>
+                    </Principal>
+                    <Dependent Role="ToRole_Header2Pilots">
+                        <PropertyRef Name="Year_Race"/>
+                        <PropertyRef Name="Race"/>
+                        <PropertyRef Name="Kart_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Header2Item" sap:content-version="1">
+                <End Type="ZINT_KART_SRV.KartHeader" Multiplicity="1" Role="FromRole_Header2Item"/>
+                <End Type="ZINT_KART_SRV.KartItem" Multiplicity="*" Role="ToRole_Header2Item"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Header2Item">
+                        <PropertyRef Name="Race"/>
+                        <PropertyRef Name="Year_Race"/>
+                        <PropertyRef Name="Kart_Id"/>
+                    </Principal>
+                    <Dependent Role="ToRole_Header2Item">
+                        <PropertyRef Name="Race"/>
+                        <PropertyRef Name="Year_Race"/>
+                        <PropertyRef Name="Kart_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZINT_KART_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="KartHeaderSet" EntityType="ZINT_KART_SRV.KartHeader" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="KartItemSet" EntityType="ZINT_KART_SRV.KartItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="KartPilotsSet" EntityType="ZINT_KART_SRV.KartPilots" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="KartRacesInfoSet" EntityType="ZINT_KART_SRV.KartRacesInfo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="Header2PilotsSet" Association="ZINT_KART_SRV.Header2Pilots" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="KartHeaderSet" Role="FromRole_Header2Pilots"/>
+                    <End EntitySet="KartPilotsSet" Role="ToRole_Header2Pilots"/>
+                </AssociationSet>
+                <AssociationSet Name="Header2ItemSet" Association="ZINT_KART_SRV.Header2Item" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="KartHeaderSet" Role="FromRole_Header2Item"/>
+                    <End EntitySet="KartItemSet" Role="ToRole_Header2Item"/>
+                </AssociationSet>
+                <AssociationSet Name="Header2InfoSet" Association="ZINT_KART_SRV.Header2Info" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="KartRacesInfoSet" Role="FromRole_Header2Info"/>
+                    <End EntitySet="KartHeaderSet" Role="ToRole_Header2Info"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/opu/odata/SAP/ZINT_KART_SRV/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/opu/odata/SAP/ZINT_KART_SRV/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>
