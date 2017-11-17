@@ -1,8 +1,8 @@
 sap.ui.define([
-	'jquery.sap.global',
-	'sap/ui/core/mvc/Controller',
-	'sap/ui/model/Filter',
-	'sap/ui/model/json/JSONModel'
+	"jquery.sap.global",
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/model/Filter",
+	"sap/ui/model/json/JSONModel"
 	], function(jQuery, Controller, Filter, JSONModel) {
 	"use strict";
 	return Controller.extend("KartingReportingApp.controller.Races", {
@@ -34,25 +34,25 @@ sap.ui.define([
 
 			this.getModel().read("/RaceSet/", {
         		success: function(oData, oResponse) {
-        			function pushData(oData, key, name) {
+        			function pushData(data, key, name) {
         				var intermediateArray = [];
-						for (let count = 0; count < oData.results.length; count++) {
-            				intermediateArray.push({ "key" : oData.results[count][key], "name" : oData.results[count][name] });
+						for (var count = 0; count < data.results.length; count++) {
+            				intermediateArray.push({ "key" : data.results[count][key], "name" : data.results[count][name] });
             			}
             			var finalArray = [{ "key" : "", "name" : i18n.getText("All") }];
-            			for (let count = 0; count < intermediateArray.length; count++) {
-            				if (intermediateArray[count].key !== finalArray[count].key) {
-            					finalArray.push(intermediateArray[count]);
+            			for (var counter = 0; counter < intermediateArray.length; counter++) {
+            				if (intermediateArray[counter].key !== finalArray[counter].key) {
+            					finalArray.push(intermediateArray[counter]);
             				}
             			}
             			return finalArray;
                     }
 
             		filterModel.setData({
-            			RacesDatesArray: pushData(oData, 'YearRace', 'YearRace'),
-            			RacesIdArray: pushData(oData, 'RaceId', 'RaceName'),
-            			RacesLocationArray: pushData(oData, 'LocationId', 'LocationId'),
-            			RacesTournamentArray: pushData(oData, 'TournamentId', 'TournamentId')
+            			RacesDatesArray: pushData(oData, "YearRace", "YearRace"),
+            			RacesIdArray: pushData(oData, "RaceId", "RaceName"),
+            			RacesLocationArray: pushData(oData, "LocationId", "LocationId"),
+            			RacesTournamentArray: pushData(oData, "TournamentId", "TournamentId")
             		});
         		},
         		error: function(error) { }
@@ -112,7 +112,7 @@ sap.ui.define([
 
 		getFilterCriteria: function (aCurrentFilterValues){
 			return this.aKeys.filter(function (el, i) {
-				if (aCurrentFilterValues[i] !== "") return  el;
+				if (aCurrentFilterValues[i] !== "") { return  el; }
 			});
 		},
 
