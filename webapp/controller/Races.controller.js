@@ -49,10 +49,10 @@ sap.ui.define([
                     }
 
             		filterModel.setData({
-            			RacesDatesArray: pushData(oData, "YearRace", "YearRace"),
-            			RacesIdArray: pushData(oData, "RaceId", "RaceName"),
-            			RacesLocationArray: pushData(oData, "LocationId", "LocationId"),
-            			RacesTournamentArray: pushData(oData, "TournamentId", "TournamentId")
+            			RacesDatesArray:		pushData(oData, "YearRace", "YearRace"),
+            			RacesIdArray:			pushData(oData, "RaceId", "RaceName"),
+            			RacesLocationArray: 	pushData(oData, "LocationId", "LocationId"),
+            			RacesTournamentArray:	pushData(oData, "TournamentId", "TournamentId")
             		});
         		},
         		error: function(error) { }
@@ -60,8 +60,10 @@ sap.ui.define([
 			this.getView().setModel(filterModel,"filterModel");
 		},
 
-		goToRaceDetail: function() { 
-			//go to the race detail page
+		goToRaceDetail: function(oEvent) { 
+			var oItem = oEvent.getSource();
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.navTo("race", { racePath: oItem.getBindingContext().getPath().substr(1) });
 		},
 
 		onToggleHeader: function () {

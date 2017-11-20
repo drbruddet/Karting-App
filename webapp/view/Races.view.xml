@@ -22,25 +22,25 @@
 				<f:content>
 					<layout:Grid>
 						<layout:VerticalLayout>
-							<Label text="Date:"/>
+							<Label text="{i18n>filterDateLabel}"/>
 							<Select id="race-year-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesDatesArray}">
 								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 						<layout:VerticalLayout>
-							<Label text="Race Name:"/>
+							<Label text="{i18n>filterNameLabel}"/>
 							<Select id="race-name-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesIdArray}">
 								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 						<layout:VerticalLayout>
-							<Label text="Tournament:"/>
+							<Label text="{i18n>filterTournamentLabel}"/>
 							<Select id="race-tournament-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesTournamentArray}">
 								<core:Item key="{filterModelkey}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 						<layout:VerticalLayout>
-							<Label text="Location:"/>
+							<Label text="{i18n>filterLocationLabel}"/>
 							<Select id="race-location-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesLocationArray}">
 								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
@@ -54,14 +54,14 @@
 		<f:content>
 			<Table id="table_races" noDataText="" items="{ path: '/RaceSet' }">
 				<columns>
-					<Column><Text text="Year"/></Column>
-					<Column><Text text="Name"/></Column>
-					<Column><Text text="Location"/></Column>
-					<Column><Text text="Nb Team"/></Column>
-					<Column><Text text="Winner"/></Column>
+					<Column><Text text="{i18n>filterDateField}"/></Column>
+					<Column><Text text="{i18n>filterNameField}"/></Column>
+					<Column><Text text="{i18n>filterLocationField}"/></Column>
+					<Column><Text text="{i18n>filterNbTeamField}"/></Column>
+					<Column><Text text="{i18n>filterWinnerField}"/></Column>
 				</columns>
 				<items>
-					<ColumnListItem>
+					<ColumnListItem type="Navigation" press="goToRaceDetail">
 						<cells>
 							<Text text="{YearRace}"/>
 							<ObjectIdentifier title="{RaceName} {= ${TournamentId} > 000 ? '- ' + ${TournamentId} : '' }" text=""/>

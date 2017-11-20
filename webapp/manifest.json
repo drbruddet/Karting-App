@@ -88,6 +88,32 @@
 				"preload": true
 			}
 		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "KartingReportingApp.view",
+				"controlId": "application",
+				"controlAggregation": "pages"
+			},
+			"routes": [{
+				"pattern": "",
+				"name": "races",
+				"target": "races"
+			}, {
+				"pattern": "{racePath}",
+				"name": "race",
+				"target": "race"
+			}],
+			"targets": {
+				"races": {
+					"viewName": "Races"
+				},
+				"race": {
+					"viewName": "Race"
+				}
+			}
+		},
 		"resources": {
 			"css": [{
 				"uri": "css/style.css"

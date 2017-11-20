@@ -4,9 +4,5 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	displayBlock="true" 
 	xmlns="sap.m">
-	<App>
-		<pages>
-			<mvc:XMLView viewName="KartingReportingApp.view.Races"/>
-		</pages>
-	</App>
+	<App class="application-container" id="application" />
 </mvc:View>
