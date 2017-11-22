@@ -4,19 +4,5 @@
   "pinnableHeader": false,
   "Filter" : {
     "text": "Filtered by: nothing"
-  },
-  "raceView": {
-	"informations": {
-		"isPanelExpandable": true,
-		"isPanelExpanded": true
-	},
-	"overview": {
-		"isPanelExpandable": true,
-		"isPanelExpanded": false
-	},
-	"resultTable": {
-		"isPanelExpandable": true,
-		"isPanelExpanded": true
-	}
   }
 }

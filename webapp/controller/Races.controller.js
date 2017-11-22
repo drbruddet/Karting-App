@@ -1,15 +1,15 @@
 sap.ui.define([
-	"jquery.sap.global",
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/Filter",
 	"sap/ui/model/json/JSONModel"
-	], function(jQuery, Controller, Filter, JSONModel) {
+], function(Controller, Filter, JSONModel) {
 	"use strict";
 	return Controller.extend("KartingReportingApp.controller.Races", {
 
 		onInit: function() {
-			this.i18n = this.getModel("i18n").getResourceBundle();
 			this.setNoDataText();
+			this.i18n = this.getModel("i18n").getResourceBundle();
+			this.buildFilterModel();
 
 			this.aKeys				= ["YearRace", "RaceId", "TournamentId", "LocationId"];
 			this.oSelectYearRace	= this.getView().byId("race-year-filter");
@@ -18,7 +18,6 @@ sap.ui.define([
 			this.oSelectLocation	= this.getView().byId("race-location-filter");
 			
 			this.getModel("config").setProperty("/Filter/text", this.i18n.getText("noFilter"));
-			this.buildFilterModel();
 			this.addSnappedLabel();
 		},
 
@@ -61,13 +60,21 @@ sap.ui.define([
 		},
 
 		goToRaceDetail: function(oEvent) { 
-			var oItem = oEvent.getSource();
+			var oItem	= oEvent.getSource();
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			oRouter.navTo("race", { racePath: oItem.getBindingContext().getPath().substr(1) });
 		},
 
 		onToggleHeader: function () {
 			this.getView().byId("racePage").setHeaderExpanded(!this.getView().byId("racePage").getHeaderExpanded());
+		},
+		
+		onClearFilters: function () {
+			this.filterTable(["", "", "", ""]);
+			this.oSelectYearRace.setSelectedKey(0);
+			this.oSelectName.setSelectedKey(0);
+			this.oSelectTournament.setSelectedKey(0);
+			this.oSelectLocation.setSelectedKey(0);
 		},
 
 		formatToggleButtonText: function(bValue){
@@ -91,6 +98,7 @@ sap.ui.define([
 		updateFilterCriterias: function (aFilterCriterias) {
 			this.removeSnappedLabel(); /* because in case of label with an empty text, */
 			this.addSnappedLabel(); /* a space for the snapped content will be allocated and can lead to title misalignment */
+			this.getView().byId("clearFilters").setVisible(true);
 			this.getModel("config").setProperty("/Filter/text", this.getFormattedSummaryText(aFilterCriterias));
 		},
 
@@ -136,13 +144,16 @@ sap.ui.define([
 			var i18n	= this.getModel("i18n").getResourceBundle();
 			var oModel	= this.getModel();
 			var object	= this.byId("table_races");
-
-			oModel.attachRequestFailed(function(){
+			
+			oModel.attachRequestSent(function(){
+				sap.ui.core.BusyIndicator.show(0);
+			}).attachRequestFailed(function(){
 				object.setNoDataText(i18n.getText("dataRequestFailed"));
 			}).attachMetadataFailed(function(mArguments){
 				var error = mArguments.getParameters();
 				object.setNoDataText(error.statusCode + " " + error.statusText + ". " + error.response.body);
 			}).attachRequestCompleted(function() {
+				sap.ui.core.BusyIndicator.hide();
 				object.setNoDataText(
 					this.bindList("$metadata").getLength() === 0 
 						? i18n.getText("noData") 

@@ -81,7 +81,7 @@
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneTime",
+					"defaultBindingMode": "TwoWay",
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "ZINT_KART_SRV",

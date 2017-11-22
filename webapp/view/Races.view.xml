@@ -10,8 +10,8 @@
 				</f:heading>
 				<f:actions>
 					<ToolbarSpacer/>
-					<Label text="{config>/Filter/text}"/>
-					<ToolbarSpacer/>
+					<Label class="sapUiSmallMarginEnd sapUiVisibleOnlyOnDesktop" text="{config>/Filter/text}"/>
+					<Button text="{i18n>clearFilters}" press="onClearFilters" visible="false" id="clearFilters" type="Transparent"/>
 					<ToggleButton pressed="{config>/headerExpanded}" icon="sap-icon://collapse"
 						text="{path:'config>/headerExpanded', formatter:'.formatToggleButtonText'}" type="Transparent"/>
 				</f:actions>
@@ -20,28 +20,28 @@
 		<f:header>
 			<f:DynamicPageHeader pinnable="{config>/pinnableHeader}">
 				<f:content>
-					<layout:Grid>
-						<layout:VerticalLayout>
+					<layout:Grid hSpacing="0" defaultSpan="XL3 L3 M6 S12" class="sapUiSmallMargin sapUiForceWidthAuto">
+						<layout:VerticalLayout >
 							<Label text="{i18n>filterDateLabel}"/>
-							<Select id="race-year-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesDatesArray}">
+							<Select id="race-year-filter" width="200px" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesDatesArray}">
 								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 						<layout:VerticalLayout>
 							<Label text="{i18n>filterNameLabel}"/>
-							<Select id="race-name-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesIdArray}">
+							<Select id="race-name-filter" width="200px" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesIdArray}">
 								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 						<layout:VerticalLayout>
 							<Label text="{i18n>filterTournamentLabel}"/>
-							<Select id="race-tournament-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesTournamentArray}">
-								<core:Item key="{filterModelkey}" text="{filterModel>name}"/>
+							<Select id="race-tournament-filter" width="200px" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesTournamentArray}">
+								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
 						<layout:VerticalLayout>
 							<Label text="{i18n>filterLocationLabel}"/>
-							<Select id="race-location-filter" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesLocationArray}">
+							<Select id="race-location-filter" width="200px" forceSelection="true" change="onSelectChange" items="{filterModel>/RacesLocationArray}">
 								<core:Item key="{filterModel>key}" text="{filterModel>name}"/>
 							</Select>
 						</layout:VerticalLayout>
@@ -56,7 +56,7 @@
 				<columns>
 					<Column><Text text="{i18n>filterDateField}"/></Column>
 					<Column><Text text="{i18n>filterNameField}"/></Column>
-					<Column><Text text="{i18n>filterLocationField}"/></Column>
+					<Column minScreenWidth="Medium"><Text text="{i18n>filterLocationField}"/></Column>
 					<Column><Text text="{i18n>filterNbTeamField}"/></Column>
 					<Column><Text text="{i18n>filterWinnerField}"/></Column>
 				</columns>

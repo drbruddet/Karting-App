@@ -1,86 +1,67 @@
 <mvc:View
+	height="100%"
 	controllerName="KartingReportingApp.controller.Race"
-	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:l="sap.ui.layout">
+	xmlns:l="sap.ui.layout"
+	xmlns="sap.m">
 	<Page title="{YearRace} - {RaceName}" showNavButton="true" navButtonPress="onNavBack">
-		 <content>
-		 	
-		 	<Panel 
-            	expandable="{config>/raceView/informations/isPanelExpandable}" 
-            	expanded="{config>/raceView/informations/isPanelExpanded}" 
-            	headerText="{i18n>informations}" 
-            	width="auto" 
-            	class="sapUiResponsiveMargin">
-				<l:Grid defaultSpan="L4 M4 S6" class="sapUiSmallMarginTop">
-					<l:content>
-						<l:VerticalLayout>
-							<ObjectAttribute title="{i18n>date}" text="{YearRace}" />
-							<ObjectAttribute title="{i18n>nbTeams}" text="{NbTeams}" />
-						</l:VerticalLayout>
-						<l:VerticalLayout>
-							<ObjectAttribute title="{i18n>location}" text="{RaceName}" />
-							<ObjectAttribute title="{i18n>tournament}" text="{TournamentId}" />
-							<ObjectAttribute title="{i18n>city}" text="{LocationCity}" />
-						</l:VerticalLayout>
-						<l:VerticalLayout>
-							<Button type="Accept" text="{i18n>seeCompleteTimes}" press="goToCompleteTimes" />
-						</l:VerticalLayout>
-					</l:content>
-				</l:Grid>
-			</Panel>
-			
-            <Panel 
-            	expandable="{config>/raceView/overview/isPanelExpandable}" 
-            	expanded="{config>/raceView/overview/isPanelExpanded}" 
-            	headerText="{i18n>overview}" 
-            	width="auto" 
-            	class="sapUiResponsiveMargin">
-				<content>
-			<!--		<TileContainer id="container-tile" tiles="{/TileCollection}">
-						<StandardTile
-							number="{number}"
-							numberUnit="{numberUnit}"
-							title="{title}" />
-					</TileContainer> -->
-				</content>
-			</Panel>
-			
-			<Panel 
-            	expandable="{config>/raceView/resultTable/isPanelExpandable}" 
-            	expanded="{config>/raceView/resultTable/isPanelExpanded}" 
-            	headerText="{i18n>resultTable}" 
-            	width="auto" 
-            	class="sapUiResponsiveMargin">
-				<content>
-					<Table id="table_races" noDataText="" items="{ path: '/LapSet' }">
-						<columns>
-							<Column><Text text="Position"/></Column>
-							<Column><Text text="Kart Number"/></Column>
-							<Column><Text text="Team Name"/></Column>
-							<Column><Text text="Nb Laps"/></Column>
-							<Column><Text text="Gap"/></Column>
-							<Column><Text text="Best Time"/></Column>
-							<Column><Text text="Avg Time"/></Column>
-							<Column><Text text="Avg Speed"/></Column>
-						</columns>
-						<items>
-							<ColumnListItem type="Navigation" press="goToRaceTeamDetail">
-								<cells>
-									<Text text="{Position}"/>
-									<Text text="{TeamId}"/>
-									<Link text="{TeamName}"/>
-									<Text text="{NbLaps}"/>
-									<Text text="{Gap}"/>
-									<Text text="{BestTime}"/>
-									<Text text="{AvgTime}"/>
-									<Text text="{AvgSpeed}"/>
-								</cells>
-							</ColumnListItem>
-						</items>
-					</Table>
-				</content>
-			</Panel>
-        </content>
+		<ObjectHeader id="oh1" responsive="true" title="{YearRace} - {RaceName}" backgroundDesign="Translucent">
+			<attributes>
+				<ObjectAttribute title="{i18n>location}" text="{LocationId}" />
+				<ObjectAttribute title="{i18n>city}" text="{LocationCity}" />
+			</attributes>
+			<statuses>
+				<ObjectStatus title="{i18n>tournament}" text="{TournamentId}" state="Warning"/>
+			</statuses>
+			<headerContainer>
+				<IconTabBar id="itb1" selectedKey="key1" upperCase="true" class="sapUiResponsiveContentPadding">
+					<items>
+						<IconTabFilter icon="sap-icon://competitor" text="Ranking" count="{NbTeams}" key="key1">
+							<content>
+								<l:VerticalLayout class="sapUiContentPadding" width="100%">
+									<l:content>
+
+										<TileContainer tiles="{path: 'team>/path'}" height="300px">
+											<StandardTile
+												icon="{path: 'team>Ranking', formatter: '.formatter.getIconRanking'}"
+												number="{team>Ranking}"
+												numberUnit="{team>TeamName}"
+												title="{parts: [{path: 'team>BestTime'}, {path: 'team>AvgTime'}, {path: 'team>AvgSpeed'}], 
+														formatter: '.formatter.getTeamTileBody'}"
+												info="{path: 'team>Gap', formatter: '.formatter.getGap'}"
+												infoState="Error">
+												<customData>
+                    								<core:CustomData key="podium" value="{team>Ranking}" writeToDom="true" />
+                    							</customData>
+                    						</StandardTile>
+										</TileContainer>
+									</l:content>
+								</l:VerticalLayout>
+							</content>
+						</IconTabFilter>
+						<IconTabFilter icon="sap-icon://line-chart-time-axis" text="Time Chart" key="key2">
+							<content>
+								<l:VerticalLayout class="sapUiContentPadding" width="100%">
+									<l:content>
+	
+									</l:content>
+								</l:VerticalLayout>
+							</content>
+						</IconTabFilter>
+						<IconTabFilter icon="sap-icon://fob-watch" text="Details" key="key3">
+							<content>
+								<l:VerticalLayout class="sapUiContentPadding" width="100%">
+									<l:content>
+
+									</l:content>
+								</l:VerticalLayout>
+							</content>
+						</IconTabFilter>
+
+					</items>
+				</IconTabBar>
+			</headerContainer>
+		</ObjectHeader>
 	</Page>
 </mvc:View>
