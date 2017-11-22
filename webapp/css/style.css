@@ -11,3 +11,7 @@ div[data-podium="2"] {
 div[data-podium="3"] {
  	box-shadow: 0 0 0 3px rgba(205, 127, 50, 1);
 }
+
+.sapMStdTileTitle {
+	font-size: 0.8em;
+}

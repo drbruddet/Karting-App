@@ -10,7 +10,15 @@ sap.ui.define([], function () {
 		},
 		
 		getTeamTileBody: function(BestTime, AvgTime, Speed) {
-			return "Best Time: " + BestTime + ". Avg Time: " + AvgTime + ". Speed: " + Speed + " Km/h";
+/*			var str = "<strong>toto</strong>";    
+			var html = $.parseHTML(str);
+			console.log(html);
+			return html; */
+			
+			var i18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+			return ( i18n.getText("BestTime")	+ ": " + BestTime	+ ". " +
+					 i18n.getText("AvgTime")	+ ": " + AvgTime	+ ". " +
+					 i18n.getText("AvgSpeed")	+ ": " + Speed		+ " Km/h." );
 		}
 	};
 });

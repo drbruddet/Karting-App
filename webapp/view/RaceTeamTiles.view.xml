@@ -1,0 +1,22 @@
+<mvc:View 
+	height="100%" 
+	controllerName="KartingReportingApp.controller.RaceTeamTiles"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:l="sap.ui.layout" 
+	xmlns="sap.m">
+	<TileContainer tiles="{path: 'team>/path'}" height="300px">
+		<StandardTile
+			icon="{path: 'team>Ranking', formatter: '.formatter.getIconRanking'}"
+			number="{team>Ranking}"
+			numberUnit="{team>TeamName}"
+			title="{parts: ['team>BestTime', 'team>AvgTime', 'team>AvgSpeed'], 
+					formatter: '.formatter.getTeamTileBody'}"
+			info="{path: 'team>Gap', formatter: '.formatter.getGap'}"
+			infoState="Error">
+			<customData>
+                <core:CustomData key="podium" value="{team>Ranking}" writeToDom="true" />
+            </customData>
+        </StandardTile>
+	</TileContainer>
+</mvc:View>

@@ -1,0 +1,30 @@
+<mvc:View 
+	height="100%" 
+	controllerName="KartingReportingApp.controller.RaceChart" 
+	xmlns:yol="sap.suite.ui.commons" 
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:l="sap.ui.layout" 
+	xmlns:viz="sap.viz.ui5.controls" 
+	xmlns="sap.m">
+	<yol:ChartContainer 
+		id="chartContainer" 
+		showFullScreen="true" 
+		showPersonalization="false" 
+		autoAdjustHeight="false"
+		personalizationPress="attachPersonalizationPress" 
+		contentChange="attachContentChange" 
+		title="Race Times">
+		<yol:content>
+			<yol:ChartContainerContent icon="sap-icon://line-chart" title="Line Chart">
+				<yol:content>
+					<viz:VizFrame 
+						id="chartContainerVizFrame" 
+						height="400px" 
+						width="100%" 
+						uiConfig="{applicationSet:'fiori'}" />
+				</yol:content>
+			</yol:ChartContainerContent>
+		</yol:content>
+	</yol:ChartContainer>
+</mvc:View>

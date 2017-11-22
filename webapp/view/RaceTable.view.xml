@@ -1,0 +1,26 @@
+<mvc:View 
+	height="100%" 
+	controllerName="KartingReportingApp.controller.RaceTable"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:l="sap.ui.layout" 
+	xmlns="sap.m">
+	<Table items="{ path:'laps>/Laps', sorter: [ { path: 'LapId', descending: false }, { path: 'Time', descending: false } ]}">
+		<columns>
+			<Column mergeDuplicates="true" hAlign="Begin">
+				<header><Text text="Laps"/></header>
+			</Column>
+			<Column mergeDuplicates="true" hAlign="End">
+				<header><Text text="TeamName"/></header>
+			</Column>
+			<Column demandPopin="true" hAlign="End">
+				<header><Text text="Time"/></header>
+			</Column>
+		</columns>
+		<ColumnListItem>
+			<Text text="{laps>LapId}"/>
+			<Text text="{laps>TeamName}"/>
+			<Text text="{laps>Time}"/>
+		</ColumnListItem>
+	</Table>
+</mvc:View>
