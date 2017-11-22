@@ -1,11 +1,6 @@
 sap.ui.define([], function () {
 	"use strict";
 	return {
-
-		countWinners: function (nbTeams) {
-			return nbTeams < 3 ? nbTeams : 3;
-		},
-		
 		getGap: function (gap) {
 			return gap ? "+" + gap + "min" : "";
 		},
